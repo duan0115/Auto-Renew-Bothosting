@@ -228,6 +228,7 @@ def main():
         sb.sleep(8)
 
         # 处理 Turnstile 验证
+        turnstile_passed = True
         page_source = sb.get_page_source().lower()
         cf_indicators = ["turnstile", "challenges.cloudflare", "just a moment", "verify you are human"]
         if any(x in page_source for x in cf_indicators):
