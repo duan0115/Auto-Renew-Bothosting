@@ -34,12 +34,19 @@ jobs:
         run: |
           bash <(wget -qO- https://main.ssss.nyc.mn/setup_proxy.sh)
 
+      # 🚀 运行续期脚本（多账号模式）
+      # DISCORD_TOKEN 支持多账号：Secret 内容一行一个账号，格式二选一：
+      #   token
+      #   备注,token          （逗号后面的部分才是真正的 token，备注只用来在通知里区分账号）
+      # 例如：
+      #   主号,MTExxxx.xxxx.xxxx
+      #   小号,MTIyxxxx.xxxx.xxxx
+      #
+      # EMAIL 可选，同样一行对应一个账号（仅用于通知里显示掩码邮箱，可以整个不填）
       - name: 🚀 运行续期脚本
         env:
           EMAIL: ${{ secrets.EMAIL }}
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
           DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
-          SESSION_TOKEN: ${{ secrets.SESSION_TOKEN }}
           TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }}
           TG_CHAT_ID: ${{ secrets.TG_CHAT_ID }}
         run: |
