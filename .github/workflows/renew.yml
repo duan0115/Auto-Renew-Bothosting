@@ -2,7 +2,7 @@ name: Auto Renew Bot-hosting
 
 on:
   schedule:
-    - cron: '0 1 * * *' # 每天UTC 1点 (北京时间8点, 一般都会推迟),自行根据服务到期时间调整
+    - cron: '0 1 * * *' # 每天UTC 1点 (北京时间9点, 一般都会推迟),自行根据服务到期时间调整
   workflow_dispatch:
 
 jobs:
@@ -35,18 +35,11 @@ jobs:
           bash <(wget -qO- https://main.ssss.nyc.mn/setup_proxy.sh)
 
       # 🚀 运行续期脚本（多账号模式）
-      # DISCORD_TOKEN 支持多账号：Secret 内容一行一个账号，格式二选一：
-      #   token
-      #   备注,token          （逗号后面的部分才是真正的 token，备注只用来在通知里区分账号）
-      # 例如：
-      #   主号,MTExxxx.xxxx.xxxx
-      #   小号,MTIyxxxx.xxxx.xxxx
-      #
-      # EMAIL 可选，同样一行对应一个账号（仅用于通知里显示掩码邮箱，可以整个不填）
+      # ACCOUNTS 是纯 JSON 数组（外面不要再套引号），例如：
+      # [{"email":"a@example.com","password":"密码1"},{"email":"b@example.com","password":"密码2"}]
       - name: 🚀 运行续期脚本
         env:
-          EMAIL: ${{ secrets.EMAIL }}
-          DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
+          ACCOUNTS: ${{ secrets.ACCOUNTS }}
           TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }}
           TG_CHAT_ID: ${{ secrets.TG_CHAT_ID }}
         run: |
